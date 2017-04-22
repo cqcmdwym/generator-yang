@@ -1,32 +1,42 @@
 'use strict';
 
 var generators = require('yeoman-generator');
-var MyBase = generators.extend({
-    anotherHelper: function() {
-        console.log('inside another helper');
-    }
-});
 
-module.exports = MyBase.extend({
+module.exports = generators.extend({
     constructor: function() {
         generators.apply(this, arguments);
     },
 
-    init: function() {
-        this.log('inside init');
-        this.baz = function() {
-            this.log('inside baz');
+    initializing: function() {
+        this.log('initializing');
+    },
+    prompting: {
+        method1: function() {
+            this.log('in prompting1');
+        },
+        method2: function() {
+            this.log('in prompting2');
         }
     },
-
-    _foo: function() {
-        this.log('inside foo');
+    configuring: function() {
+        this.log('configuring');
     },
-
-    bar: function() {
-        this.log('inside bar');
-        this._foo();
-        this.baz();
-        this.anotherHelper();
+    default: function() {
+        this.log('default');
+    },
+    writing: function() {
+        this.log('writing');
+    },
+    conflicts: function() {
+        this.log('conflicts');
+    },
+    install: function() {
+        this.log('install');
+    },
+    end: function() {
+        this.log('end');
+    },
+    myCustomMethpd: function() {
+        this.log('**custom');
     }
 });
