@@ -38,13 +38,14 @@ module.exports = generators.extend({
 
         },
         appStaticFiles: function() {
-            this.log('Template path: ' + this.templatePath());
-            this.log('Destination path: ' + this.destinationPath());
+            // this.log('Template path: ' + this.templatePath());
+            // this.log('Destination path: ' + this.destinationPath());
             var source = this.templatePath('yeoman.ico');
             var destination = this.destinationPath('src/yeoman.ico');
-            this.log('Source:' + source);
-            this.log('Destination' + destination);
+            // this.log('Source:' + source);
+            // this.log('Destination' + destination);
             this.fs.copy(source, destination);
+            this.fs.copy(this.templatePath('styles'), this.destinationPath('src/styles'));
         },
         scripts: function() {
 
