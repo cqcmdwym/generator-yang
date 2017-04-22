@@ -35,7 +35,14 @@ module.exports = generators.extend({
 
         },
         bower: function() {
-
+            var bowerJson = {
+                name: 'my-app',
+                license: 'MIT',
+                dependencies: {}
+            }
+            bowerJson.dependencies['angular'] = '~1.4.6';
+            bowerJson.dependencies['moment'] = '~2.10.6';
+            this.fs.writeJSON('src/bower.json', bowerJson);
         },
         appStaticFiles: function() {
             // this.log('Template path: ' + this.templatePath());
