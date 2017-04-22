@@ -24,8 +24,34 @@ module.exports = generators.extend({
     default: function() {
         this.log('default');
     },
-    writing: function() {
-        this.log('writing');
+    writing: {
+        gulpfile: function() {
+
+        },
+        packageJson: function() {
+
+        },
+        git: function() {
+
+        },
+        bower: function() {
+
+        },
+        appStaticFiles: function() {
+            this.log('Template path: ' + this.templatePath());
+            this.log('Destination path: ' + this.destinationPath());
+            var source = this.templatePath('yeoman.ico');
+            var destination = this.destinationPath('src/yeoman.ico');
+            this.log('Source:' + source);
+            this.log('Destination' + destination);
+            this.fs.copy(source, destination);
+        },
+        scripts: function() {
+
+        },
+        html: function() {
+
+        }
     },
     conflicts: function() {
         this.log('conflicts');
