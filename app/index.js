@@ -40,7 +40,7 @@ module.exports = generators.extend({
         appStaticFiles: function() {
             // this.log('Template path: ' + this.templatePath());
             // this.log('Destination path: ' + this.destinationPath());
-            var source = this.templatePath('yeoman.ico');
+            var source = this.templatePath('_yeoman.ico');
             var destination = this.destinationPath('src/yeoman.ico');
             // this.log('Source:' + source);
             // this.log('Destination' + destination);
@@ -48,10 +48,21 @@ module.exports = generators.extend({
             this.fs.copy(this.templatePath('styles'), this.destinationPath('src/styles'));
         },
         scripts: function() {
-
+            this.fs.copyTpl(
+                this.templatePath('app/_app.js'),
+                this.destinationPath('src/app/app.js'), {
+                    ngapp: 'myapp'
+                }
+            );
         },
         html: function() {
-
+            this.fs.copyTpl(
+                this.templatePath('_index.html'),
+                this.destinationPath('src/index.html'), {
+                    appname: 'My Cool App',
+                    ngapp: 'myapp'
+                }
+            );
         }
     },
     conflicts: function() {
