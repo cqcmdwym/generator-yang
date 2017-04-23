@@ -8,6 +8,10 @@ var generators = require('yeoman-generator'),
 module.exports = generators.extend({
     constructor: function() {
         generators.apply(this, arguments);
+        this.argument('appname', { type: String, required: true });
+        //this.log('appname (arg):' + this.appname);
+        this.appname = _.kebabCase(this.options.appname);
+        this.log('appname (arg):' + this.appname);
     },
 
     initializing: function() {
@@ -36,7 +40,7 @@ module.exports = generators.extend({
         },
         bower: function() {
             var bowerJson = {
-                name: 'my-app',
+                name: this.appname,
                 license: 'MIT',
                 dependencies: {}
             }
@@ -67,7 +71,7 @@ module.exports = generators.extend({
             this.fs.copyTpl(
                 this.templatePath('_index.html'),
                 this.destinationPath('src/index.html'), {
-                    appname: 'My Cool App',
+                    appname: _.startCase(this.appname),
                     ngapp: 'myapp'
                 }
             );
