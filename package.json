@@ -9,6 +9,9 @@
   "author": "cqcmdwym",
   "license": "ISC",
   "dependencies": {
-    "yeoman-generator": "^1.1.1"
+    "chalk": "^1.1.3",
+    "lodash": "^4.17.4",
+    "yeoman-generator": "^1.1.1",
+    "yosay": "^2.0.0"
   }
 }

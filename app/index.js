@@ -1,6 +1,9 @@
 'use strict';
 
-var generators = require('yeoman-generator');
+var generators = require('yeoman-generator'),
+    _ = require('lodash'),
+    chalk = require('chalk'),
+    yosay = require('yosay');
 
 module.exports = generators.extend({
     constructor: function() {
@@ -10,13 +13,8 @@ module.exports = generators.extend({
     initializing: function() {
         this.log('initializing');
     },
-    prompting: {
-        method1: function() {
-            this.log('in prompting1');
-        },
-        method2: function() {
-            this.log('in prompting2');
-        }
+    prompting: function() {
+        this.log(yosay('Welcome to ' + chalk.yellow('YANG(Yet Another Angular)') + ' generator!'));
     },
     configuring: function() {
         this.log('configuring');
@@ -26,13 +24,15 @@ module.exports = generators.extend({
     },
     writing: {
         gulpfile: function() {
-
+            this.fs.copy(this.templatePath('_gulpfile.js'), this.destinationPath('src/gulpfile.js'));
+            this.fs.copy(this.templatePath('_gulp.config.js'), this.destinationPath('src/gulp.config.js'));
+            this.fs.copy(this.templatePath('jshintrc'), this.destinationPath('src/.jshintrc'));
         },
         packageJson: function() {
-
+            this.fs.copy(this.templatePath('_package.json'), this.destinationPath('src/package.json'));
         },
         git: function() {
-
+            this.fs.copy(this.templatePath('gitignore'), this.destinationPath('src/.gitignore'));
         },
         bower: function() {
             var bowerJson = {
@@ -43,6 +43,7 @@ module.exports = generators.extend({
             bowerJson.dependencies['angular'] = '~1.4.6';
             bowerJson.dependencies['moment'] = '~2.10.6';
             this.fs.writeJSON('src/bower.json', bowerJson);
+            this.fs.copy(this.templatePath('bowerrc'), this.destinationPath('src/.bowerrc'));
         },
         appStaticFiles: function() {
             // this.log('Template path: ' + this.templatePath());
