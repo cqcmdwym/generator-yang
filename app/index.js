@@ -24,6 +24,28 @@ module.exports = generators.extend({
     },
     prompting: function() {
         this.log(yosay('Welcome to ' + chalk.yellow('YANG(Yet Another Angular)') + ' generator!'));
+        //var done = this.async();
+        // this.prompt({
+        //     type: 'input',
+        //     name: 'ngappname',
+        //     message: 'Angular App Name (ng-app)',
+        //     default: 'app'
+        // }, function(answers) {
+        //     this.log('testtttt');
+        //     this.log(answers.ngappname);
+        //     done();
+        // }.bind(this));
+
+        var self = this;
+        return this.prompt({
+            type: 'input',
+            name: 'ngappname',
+            message: 'Angular App Name (ng-app)',
+            default: 'app'
+        }).then(function(answers) {
+            self.log(answers);
+            self.ngappname = answers.ngappname;
+        });
     },
     configuring: function() {
         this.log('configuring');
@@ -71,7 +93,7 @@ module.exports = generators.extend({
             this.fs.copyTpl(
                 this.templatePath('app/_app.js'),
                 this.destinationPath('src/app/app.js'), {
-                    ngapp: 'myapp'
+                    ngapp: this.ngappname
                 }
             );
         },
@@ -80,7 +102,7 @@ module.exports = generators.extend({
                 this.templatePath('_index.html'),
                 this.destinationPath('src/index.html'), {
                     appname: _.startCase(this.appname),
-                    ngapp: 'myapp'
+                    ngapp: this.ngappname
                 }
             );
         }
