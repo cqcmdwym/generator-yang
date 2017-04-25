@@ -37,14 +37,37 @@ module.exports = generators.extend({
         // }.bind(this));
 
         var self = this;
-        return this.prompt({
+        return this.prompt([{
             type: 'input',
             name: 'ngappname',
             message: 'Angular App Name (ng-app)',
             default: 'app'
-        }).then(function(answers) {
+        }, {
+            type: 'checkbox',
+            name: 'jslibs',
+            message: 'Which JS libraries would you like to include?',
+            choices: [{
+                    name: 'lodash',
+                    value: 'lodash',
+                    checked: true
+                },
+                {
+                    name: 'Moment.js',
+                    value: 'momentjs',
+                    checked: true
+                },
+                {
+                    name: 'Angular-UI Utils',
+                    value: 'angularuiutils',
+                    checked: true
+                }
+            ]
+        }]).then(function(answers) {
             self.log(answers);
             self.ngappname = answers.ngappname;
+            self.includeLodash = _.includes(answers.jslibs, 'lodash');
+            self.includeMoment = _.includes(answers.jslibs, 'momentjs');
+            self.includeAngularUIUtils = _.includes(answers.jslibs, 'angularuiutils');
         });
     },
     configuring: function() {
@@ -71,8 +94,13 @@ module.exports = generators.extend({
                 license: 'MIT',
                 dependencies: {}
             }
+            if (this.includeLodash) {
+                bowerJson.dependencies['lodash'] = '~3.10.1';
+            }
             bowerJson.dependencies['angular'] = '~1.4.6';
-            bowerJson.dependencies['moment'] = '~2.10.6';
+            if (this.includeMoment) {
+                bowerJson.dependencies['moment'] = '~2.10.6';
+            }
             if (this.options.includeutils) {
                 bowerJson.dependencies['angular-ui-utils'] = '~3.0.0';
             }
